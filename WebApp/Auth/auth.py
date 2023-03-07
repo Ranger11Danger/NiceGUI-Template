@@ -12,8 +12,6 @@ from nicegui import app, ui
 
 app.add_middleware(SessionMiddleware, secret_key='some_random_string')  # use your own secret key here
 
-# in reality users and session_info would be persistent (e.g. database, file, ...) and passwords obviously hashed
-users = [('user1', 'pass1'), ('user2', 'pass2')]
 session_info: Dict[str, Dict] = {}
 
 def is_authenticated(request: Request) -> bool:
