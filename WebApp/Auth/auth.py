@@ -15,10 +15,8 @@ app.add_middleware(SessionMiddleware, secret_key='some_random_string')  # use yo
 session_info: Dict[str, Dict] = {}
 
 def is_authenticated(request: Request) -> bool:
-    # we disable auth so we can speed up dev times for now
     return session_info.get(request.session.get('id'), {}).get('authenticated', False)
-    #return True
-
+    
 @ui.page('/user')
 def main_page(request: Request) -> None:
     if not is_authenticated(request):
@@ -27,7 +25,6 @@ def main_page(request: Request) -> None:
     with ui.column().classes('absolute-center items-center'):
         ui.label(f'Hello {session["username"]}!').classes('text-2xl')
         ui.button('', on_click=lambda: ui.open('/logout')).props('outline round icon=logout')
-
 
 @ui.page('/login')
 def login(request: Request) -> None:
@@ -48,7 +45,6 @@ def login(request: Request) -> None:
         password = ui.input('Password').props('type=password').on('keydown.enter', try_login)
         ui.button('Log in', on_click=try_login)
 
-
 @ui.page('/logout')
 def logout(request: Request) -> None:
     if is_authenticated(request):
@@ -57,5 +53,3 @@ def logout(request: Request) -> None:
         return RedirectResponse('/login')
     return RedirectResponse('/')
 
-
-ui.run()

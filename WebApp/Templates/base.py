@@ -1,10 +1,4 @@
-from typing import Dict
-
 from nicegui import ui
-from fastapi import Request
-
-import sys
-sys.path.append("../Auth")
 
 def base(session):
     
